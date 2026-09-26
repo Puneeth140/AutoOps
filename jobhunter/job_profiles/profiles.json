@@ -1,0 +1,118 @@
+{
+  "profiles": [
+    {
+      "name": "Python Backend Developer",
+      "required_skills": [
+        "python",
+        "rest_api",
+        "sql"
+      ],
+      "bonus_skills": [
+        "json",
+        "git"
+      ],
+      "project_keywords": [
+        "api",
+        "backend",
+        "asynchronous",
+        "application"
+      ]
+    },
+    {
+      "name": "Python Automation Developer",
+      "required_skills": [
+        "python"
+      ],
+      "bonus_skills": [
+        "rest_api",
+        "json",
+        "git"
+      ],
+      "project_keywords": [
+        "automation",
+        "real-time",
+        "application",
+        "processing"
+      ]
+    },
+    {
+      "name": "Full Stack Developer",
+      "required_skills": [
+        "javascript",
+        "react",
+        "nextjs"
+      ],
+      "bonus_skills": [
+        "typescript",
+        "html",
+        "css",
+        "scss",
+        "rest_api"
+      ],
+      "project_keywords": [
+        "dashboard",
+        "responsive",
+        "frontend",
+        "api",
+        "web"
+      ]
+    },
+    {
+      "name": "Computer Vision Developer",
+      "required_skills": [
+        "python",
+        "opencv",
+        "numpy",
+        "computer_vision"
+      ],
+      "bonus_skills": [
+        "git"
+      ],
+      "project_keywords": [
+        "image processing",
+        "color detection",
+        "frame segmentation",
+        "background subtraction",
+        "masking",
+        "camera"
+      ]
+    },
+    {
+      "name": "Frontend Developer",
+      "required_skills": [
+        "javascript",
+        "react",
+        "nextjs"
+      ],
+      "bonus_skills": [
+        "typescript",
+        "html",
+        "css",
+        "scss"
+      ],
+      "project_keywords": [
+        "responsive",
+        "frontend",
+        "ui",
+        "dashboard",
+        "web"
+      ]
+    },
+    {
+      "name": "Java Developer",
+      "required_skills": [
+        "java"
+      ],
+      "bonus_skills": [
+        "sql",
+        "git"
+      ],
+      "project_keywords": [
+        "spring",
+        "spring boot",
+        "hibernate",
+        "backend"
+      ]
+    }
+  ]
+}
