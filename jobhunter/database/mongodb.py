@@ -5,8 +5,7 @@ from dotenv import load_dotenv
 from pymongo import MongoClient
 
 
-# Load jobhunter/.env regardless of the directory
-# from which the application is started.
+# Load jobhunter/.env regardless of where the application starts.
 ENV_FILE = Path(__file__).resolve().parents[1] / ".env"
 load_dotenv(ENV_FILE)
 
@@ -14,13 +13,14 @@ load_dotenv(ENV_FILE)
 class MongoDB:
     """MongoDB repository used by the JobHunter API."""
 
+    CURRENT_PROFILE_ID = "current_candidate"
+
     def __init__(self):
         mongo_url = os.getenv("MONGODB_URI")
 
         if not mongo_url:
             raise RuntimeError(
-                "MONGODB_URI is not configured. "
-                "Add it to jobhunter/.env."
+                "MONGODB_URI is not configured."
             )
 
         database_name = os.getenv(
@@ -41,10 +41,6 @@ class MongoDB:
         self.jobs.create_index(
             "url",
             unique=True,
-        )
-
-        self.candidate_profiles.create_index(
-            [("created_at", -1)]
         )
 
     def health_check(self) -> bool:
@@ -69,8 +65,21 @@ class MongoDB:
         )
 
     def save_candidate_profile(self, profile: dict):
-        return self.candidate_profiles.insert_one(
-            profile
+        profile = {
+            **profile,
+            "_id": self.CURRENT_PROFILE_ID,
+        }
+
+        return self.candidate_profiles.replace_one(
+            {"_id": self.CURRENT_PROFILE_ID},
+            profile,
+            upsert=True,
+        )
+
+    def get_latest_candidate_profile(self):
+        return self.candidate_profiles.find_one(
+            {"_id": self.CURRENT_PROFILE_ID},
+            {"_id": 0},
         )
 
     def get_candidate_profiles(self, limit: int = 20):
@@ -81,11 +90,4 @@ class MongoDB:
             )
             .sort("created_at", -1)
             .limit(limit)
-        )
-
-    def get_latest_candidate_profile(self):
-        return self.candidate_profiles.find_one(
-            {},
-            {"_id": 0},
-            sort=[("created_at", -1)],
         )

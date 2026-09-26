@@ -102,6 +102,8 @@ async def upload_resume(file: UploadFile = File(...)):
     if not file.filename:
         raise HTTPException(status_code=400, detail="No filename provided.")
 
+    print(f"Received resume upload: {file.filename}")
+
     extension = Path(file.filename).suffix.lower()
     if extension not in ALLOWED_EXTENSIONS:
         raise HTTPException(status_code=400, detail="Only PDF and DOCX resumes are supported.")
@@ -138,15 +140,8 @@ async def upload_resume(file: UploadFile = File(...)):
         db = MongoDB()
         db.save_candidate_profile(candidate_profile)
 
-        saved_profile = db.get_latest_candidate_profile()
-
-        if not saved_profile:
-            raise HTTPException(
-                status_code=500,
-                detail="Resume was saved, but the profile could not be retrieved."
-            )
-
-        return _public_profile(saved_profile)
+        return _public_profile(candidate_profile)
+    
     except HTTPException:
         raise
     except Exception as exc:
