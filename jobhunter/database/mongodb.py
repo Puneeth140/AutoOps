@@ -65,20 +65,18 @@ class MongoDB:
         )
 
     def save_candidate_profile(self, profile: dict):
-        profile = {
-            **profile,
-            "_id": self.CURRENT_PROFILE_ID,
-        }
-
         return self.candidate_profiles.replace_one(
-            {"_id": self.CURRENT_PROFILE_ID},
-            profile,
+            {"profile_type": "current"},
+            {
+                **profile,
+                "profile_type": "current",
+            },
             upsert=True,
         )
 
     def get_latest_candidate_profile(self):
         return self.candidate_profiles.find_one(
-            {"_id": self.CURRENT_PROFILE_ID},
+            {"profile_type": "current"},
             {"_id": 0},
         )
 
